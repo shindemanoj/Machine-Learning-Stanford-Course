@@ -28,13 +28,14 @@ X = [ones(m, 1) X];
 %       max element, for more information see 'help max'. If your examples 
 %       are in rows, then, you can use max(A, [], 2) to obtain the max 
 %       for each row.
-%       
+% 
 
+% Find value of z and Hypothesis      
+z = X*all_theta';
+H = sigmoid(z);
 
-
-
-
-
+% Find index of max hypothesis for each training example
+[result, p] = max(H, [], 2);
 
 % =========================================================================
 

@@ -21,14 +21,22 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+% Add column of 1's to X
+X = [ones(m, 1) X];
+a1 = X; % m * 401
 
+% Find value of z2 and then a2 of layer 2
+z2 = a1 * Theta1'; % m * 25
+a2 = sigmoid(z2);
+a2 = [ones(m, 1) a2];
 
+% Find value of z3 and then a3 of layer 3
+z3 = a2 * Theta2'; % m * 10
+a3 = sigmoid(z3);
 
-
-
-
-
-
+% Find index of max hypothesis for each training example
+[x, p] = max(a3, [], 2);
+ 
 % =========================================================================
 
 

@@ -40,15 +40,18 @@ grad = zeros(size(theta));
 J = - y' * log(sigmoid(X*theta)) - (1 - y') * (log(1 - sigmoid(X*theta))); 
 J = J / m;
 
+% Calculate regularization parameter for cost using vectorization
 regparam = theta .^ 2;
 regparam(1) = 0;
 regparam = sum(regparam);
 regparam = (lambda / (2 * m)) * regparam;
 J = J + regparam;
 
+% Calculate gradient using vectorization
 grad = X' * (sigmoid(X*theta) - y);
 grad = grad ./ m;
 
+% Calculate regularization parameter for gradient using vectorization
 tempTheta = theta;
 tempTheta(1) = 0;
 tempTheta = (lambda/m).*tempTheta;
