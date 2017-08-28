@@ -16,10 +16,9 @@ sim = 0;
 %
 %
 
-
-
-
-
+% Calculate similarity between x1 and x2 using Gaussian Kernel
+sim = sum((x1-x2).^2);
+sim = exp(-(sim / (2*(sigma ^ 2))));
 
 % =============================================================
     

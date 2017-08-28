@@ -19,15 +19,30 @@ sigma = 0.3;
 %                   predictions = svmPredict(model, Xval);
 %               will return the predictions on the cross validation set.
 %
-%  Note: You can compute the prediction error using 
-%        mean(double(predictions ~= yval))
-%
 
+% Initialize C and sigma Vector 
+C_Vec = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
+sigma_Vec = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
 
+% Calculate model for C=1 and sigma=0.3
+model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
+predictions = svmPredict(model, Xval);
+predError = mean(double(predictions ~= yval));
 
-
-
-
+% Calculate optimget C and sigma
+for i=1:length(C_Vec)
+  for j=1:length(sigma_Vec)
+    % Train the SVM
+    model= svmTrain(X, y, C_Vec(i), @(x1, x2) gaussianKernel(x1, x2, sigma_Vec(j)));
+    predictions = svmPredict(model, Xval);
+    predErrorTemp = mean(double(predictions ~= yval));
+    if(predErrorTemp < predError)
+      predError = predErrorTemp;
+      C = C_Vec(i);
+      sigma = sigma_Vec(j);
+    end
+  end
+end
 
 % =========================================================================
 
